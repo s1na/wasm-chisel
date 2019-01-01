@@ -1,3 +1,4 @@
+extern crate binaryen;
 extern crate byteorder;
 extern crate parity_wasm;
 extern crate rustc_hex;
@@ -6,6 +7,7 @@ use parity_wasm::elements::Module;
 
 pub mod imports;
 
+pub mod binaryenopt;
 pub mod checkstartfunc;
 pub mod deployer;
 pub mod remapimports;

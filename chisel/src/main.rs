@@ -10,8 +10,8 @@ use std::fs::{read, read_to_string};
 use std::process;
 
 use libchisel::{
-    checkstartfunc::*, deployer::*, remapimports::*, trimexports::*, verifyexports::*,
-    verifyimports::*,
+    binaryenopt::*, checkstartfunc::*, deployer::*, remapimports::*, trimexports::*,
+    verifyexports::*, verifyimports::*,
 };
 
 use clap::{App, Arg, ArgMatches, SubCommand};
@@ -243,6 +243,14 @@ fn execute_module(context: &ModuleContext, module: &mut Module) -> bool {
                 Ok(true)
             } else {
                 Err("deployer: Invalid preset")
+            }
+        }
+        "binaryenopt" => {
+            is_translator = true;
+            if let Ok(chisel) = BinaryenOptimiser::with_preset(&preset) {
+                translate_module(module, chisel)
+            } else {
+                Err("binaryenopt: Invalid preset")
             }
         }
         _ => Err("Module Not Found"),
