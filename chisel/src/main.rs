@@ -278,6 +278,9 @@ fn execute_module(context: &ModuleContext, module: &mut Module) -> bool {
 fn chisel_execute(context: &ChiselContext) -> Result<bool, &'static str> {
     if let Ok(buffer) = read(context.file()) {
         if let Ok(mut module) = deserialize_buffer::<Module>(&buffer) {
+            // FIXME: this parsing is needed for binaryenopt
+            // Should this be run depending on binaryenopt is requested or not?
+            let mut module = module.parse_names().unwrap();
             let original = module.clone();
             println!("Ruleset {}:", context.name());
             let chisel_results = context
