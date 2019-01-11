@@ -55,19 +55,8 @@ impl<'a> ImportList<'a> {
         let entries = self.entries();
 
         for import in entries {
-            match import {
-                ImportType::Function(_, field, _) => {
-                    if *field == name {
-                        return Some(&import);
-                    }
-                }
-                ImportType::Global(_, field)
-                | ImportType::Memory(_, field)
-                | ImportType::Table(_, field) => {
-                    if *field == name {
-                        return Some(&import);
-                    }
-                }
+            if import.field() == name {
+                return Some(&import);
             }
         }
         None
