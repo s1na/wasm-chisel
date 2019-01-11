@@ -302,3 +302,20 @@ impl<'a> ModulePreset for ImportList<'a> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn lookup_by_field_ewasm_good() {
+        let list = ImportList::with_preset("ewasm").unwrap();
+        assert!(list.lookup_by_field("useGas").is_some());
+    }
+
+    #[test]
+    fn lookup_by_field_ewasm_not_found() {
+        let list = ImportList::with_preset("ewasm").unwrap();
+        assert!(list.lookup_by_field("foo").is_none());
+    }
+}
