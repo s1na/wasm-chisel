@@ -11,6 +11,7 @@ jobs:
           command: |
             gcc --version
             g++ --version
+            clang --version
             apt-get -y update
             apt-get -y install libclang-dev libgcc-6-dev
       - run:
@@ -26,7 +27,7 @@ jobs:
              git diff --exit-code
       - run:
           name: Build
-          command: CC=gcc CXX=g++ cargo build --release -vv
+          command: RUST_LOG=debug cargo build --release -vv
       - run:
           name: Test
           command: cargo test -vv
